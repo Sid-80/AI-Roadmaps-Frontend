@@ -14,7 +14,7 @@ export default function Navbar() {
             </Link>
         </Button>
         <Button>
-            <Link href={'/login'}>
+            <Link href={'/signin'}>
                 SignIn
             </Link>
         </Button>
