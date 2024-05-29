@@ -1,10 +1,12 @@
 "use client"
-import SignUp from "./components/signUp";
+
+import Navbar from "@/components/Home/Navbar";
+
 export default function Home() {
   
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-16 overflow-hidden ">
-      <SignUp/>
+    <main className="flex flex-col">
+      <Navbar />
     </main>
   );
 }

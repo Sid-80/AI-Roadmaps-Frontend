@@ -1,190 +1,76 @@
 @tailwind base;
-@tailwind components;
-@tailwind utilities;
+  @tailwind components;
+  @tailwind utilities;
 
-:root {
-  --linear-grad: linear-gradient(to right, #141E30, #243B55);
-  --grad-clr1: #141E30;
-  --grad-clr2: #243B55;
-}
+  @layer base {
+    :root {
+      --background: 0 0% 100%;
+      --foreground: 222.2 84% 4.9%;
 
-@media (prefers-color-scheme: light) {
-  :root {
-    --linear-grad: linear-gradient(to right, #141E30, #243B55);
-    --grad-clr1: #141E30;
-    --grad-clr2: #243B55;
+      --card: 0 0% 100%;
+      --card-foreground: 222.2 84% 4.9%;
+
+      --popover: 0 0% 100%;
+      --popover-foreground: 222.2 84% 4.9%;
+
+      --primary: 222.2 47.4% 11.2%;
+      --primary-foreground: 210 40% 98%;
+
+      --secondary: 210 40% 96.1%;
+      --secondary-foreground: 222.2 47.4% 11.2%;
+
+      --muted: 210 40% 96.1%;
+      --muted-foreground: 215.4 16.3% 46.9%;
+
+      --accent: 210 40% 96.1%;
+      --accent-foreground: 222.2 47.4% 11.2%;
+
+      --destructive: 0 84.2% 60.2%;
+      --destructive-foreground: 210 40% 98%;
+
+      --border: 214.3 31.8% 91.4%;
+      --input: 214.3 31.8% 91.4%;
+      --ring: 222.2 84% 4.9%;
+
+      --radius: 0.5rem;
+    }
+
+    .dark {
+      --background: 222.2 84% 4.9%;
+      --foreground: 210 40% 98%;
+
+      --card: 222.2 84% 4.9%;
+      --card-foreground: 210 40% 98%;
+
+      --popover: 222.2 84% 4.9%;
+      --popover-foreground: 210 40% 98%;
+
+      --primary: 210 40% 98%;
+      --primary-foreground: 222.2 47.4% 11.2%;
+
+      --secondary: 217.2 32.6% 17.5%;
+      --secondary-foreground: 210 40% 98%;
+
+      --muted: 217.2 32.6% 17.5%;
+      --muted-foreground: 215 20.2% 65.1%;
+
+      --accent: 217.2 32.6% 17.5%;
+      --accent-foreground: 210 40% 98%;
+
+      --destructive: 0 62.8% 30.6%;
+      --destructive-foreground: 210 40% 98%;
+
+      --border: 217.2 32.6% 17.5%;
+      --input: 217.2 32.6% 17.5%;
+      --ring: 212.7 26.8% 83.9%;
+    }
   }
-}
 
-body {
-  height: 100vh;
-  background: #f6f5f7;
-  display: grid;
-  place-content: center;
-  font-family: 'Poppins', sans-serif;
-}
-
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
+  @layer base {
+    * {
+      @apply border-border;
+    }
+    body {
+      @apply bg-background text-foreground;
+    }
   }
-}
-h1{
-  color: var(--grad-clr1);
-  display: block;
-  font-size: 2em;
-  margin-inline-start: 0px;
-  margin-inline-end: 0px;
-  font-weight: bold;
-  unicode-bidi: isolate;
-}
-
-spam{
-  font-size: 12px;
-}
-.infield{
-  position: relative;
-  margin: 8px 0px;
-  width: 100%;
-}
-input{
-  width: 100%;
-  padding: 12px 15px;
-  background-color: #f3f3f3;
-  border: none;
-  outline: none;
-}
-label{
-  position: absolute;
-  left: 50%;
-  top: 100%;
-  transform: translateX(-50%);
-  width: 0%;
-  height: 2px;
-  background: var(--linear-grad);
-  transition: 0.3s;
-}
-input:focus ~ label{
-  width: 100%;
-}
-a{
-  color: #333;
-  font-size: 14px;
-  text-decoration: none;
-  margin: 15px 0px;
-}
-a.forget{
-  padding-bottom: 3px;
-  border-bottom: 2px solid #EEE;
-}
-button{
-  border-radius: 20px;
-  border: 1px solid var(--grad-clr2);
-  color: #FFF;
-  font-size: 12px;
-  font-weight: bold;
-  padding: 12px 45px;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-}
-.form-container button{
-  margin-top: 17px;
-  transition: 80ms ease-in;
-}
-.form-container button:hover{
-  background: #fff;
-  color: black !important;
-}
-.overlay-container{
-  position: absolute;
-  top: 0;
-  left: 60%;
-  width: 40%;
-  height: 100%;
-  overflow: hidden;
-  transition: transform 0,6s ease-in-out;
-  z-index: 9;
-}
-#overlayBtn{
-  cursor: pointer;
-  position: absolute;
-  left: 50%;
-  top: 304px;
-  transform: translateX(-50px);
-  width: 143.67px;
-  height: 40px;
-  border: 1px solid #FFF;
-  background: transparent;
-  border-radius: 20px;
-}
-.overlay{
-  position: relative;
-  background: var(--linear-grad);
-  color: #FFF;
-  left: -150%;
-  height: 100%;
-  width: 250%;
-  transition: transform 0.6s ease-in-out;
-}
-
-.overlay-left{
-  right: 60%;
-  transform: translateX(-12%);
-}
-.overlay-left{
-  right: 0;
-  transform: translateX(0%);
-}
-
-p{
-  font-size: 14px;
-  font-weight: 300;
-  line-height: 20px;
-  letter-spacing: 0.5px;
-  margin: 25px 0px 35px;
-}
-
-.right-panel-active .overlay-container{
-  transform: translateX(-150%);
-}
-.right-panel-active .overlay{
-  transform: translateX(50%);
-}
-.right-panel-active .overlay-left{
-  transform: translateX(25%);
-}
-.right-panel-active .overlay-right{
-  transform: translateX(35%);  
-}
-.right-panel-active .sign-in-container{
-  transform: translateX(20%);
-  opacity: 0;
-}
-.right-panel-active .sign-up-container{
-  transform: translateX(66.7%);
-  opacity: 1;
-  z-index: 5;
-  animation: show 0.6s;
-}
-@keyframes show{
-  0%,50%{
-      opacity: 0;
-      z-index: 1;
-  }
-  50.1%,100%{
-      opacity: 1;
-      z-index: 5;
-  }
-}
-.btnScaled{
-  animation: scaleBtn 0.6s;
-}
-@keyframes scaleBtn{
-  0%{
-      width: 143.67px;
-  }50%{
-      width:250px;
-  }0%{
-      width: 143.67px;
-  }
-}
