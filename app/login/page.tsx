@@ -3,8 +3,7 @@ import * as React from "react";
 import { useState, ChangeEvent, FormEvent } from "react";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
-import { logInUser } from "@/lib/Backend/api";
-// import { account } from "@/appWrite/auth";
+
 import {
   Card,
   CardContent,
@@ -15,39 +14,31 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { useRouter } from "next/navigation";
+import { useLoginUser } from "@/lib/react-query/queriesAndMutations";
+import { LoginUser } from "@/types";
 
 export default function Page() {
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<LoginUser>({
     username: '',
-    email: '',
     password: ''
   });
   const [error, setError] = useState('');
   const router = useRouter();
-  // enum OAuthProvider {
-  //   Google = 'google'
-  // }
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setFormData({
       ...formData,
       [e.target.id]: e.target.value,
     });
   };
-  // const handleLogin = async()=>{
-  //   account.createOAuth2Session(
-  //     OAuthProvider.Google,
-  //     'http://localhost:3000/',
-  //     'http://localhost:3000/login'
-  //   )
-  // }
+  const { mutateAsync: userLogin, isPending: loadingResponse } = useLoginUser();
+
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      const result = await logInUser(formData);
-      const UserID = result?.data.user._id;
-      console.log(result?.data.user._id);
+      const result = await userLogin(formData);
+ 
       if(result?.status === 200){
-        router.push('/?user_id=' + UserID)
+        router.push('/dashboard' )
       }else{
         setError("Enter Valid User ID OR Password");
       }
@@ -77,9 +68,6 @@ export default function Page() {
               <span className="text-[#141E30]">or use your account</span>
               <div className="flex flex-col space-y-1.5 w-full">
                 <Input id="username" placeholder="Name" className="w-full" value={formData.username} onChange={handleChange} />
-              </div>
-              <div className="flex flex-col space-y-1.5 w-full">
-                <Input id="email" placeholder="Email" className="w-full" value={formData.email} onChange={handleChange} />
               </div>
               <div className="flex flex-col space-y-1.5 w-full">
                 <Input id="password" placeholder="Password" className="w-full" value={formData.password} onChange={handleChange} />
