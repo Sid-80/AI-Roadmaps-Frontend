@@ -2,7 +2,6 @@
 import * as React from "react";
 import { useState, ChangeEvent, FormEvent } from "react";
 import Image from "next/image";
-import axios from "axios";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -18,7 +17,8 @@ import { USER } from "@/types";
 import { useSignIn } from "@/lib/react-query/queriesAndMutations";
 import { useDispatch } from "react-redux";
 import { logIn } from "@/Redux/Auth/auth-slice";
-
+import { z } from 'zod';
+import { createUserSchema } from "../formValidation";
 export default function Page() {
   const [formData, setFormData] = useState<USER>({
     username: "",
@@ -27,7 +27,7 @@ export default function Page() {
   });
   const dispatch = useDispatch();
   const router = useRouter();
-
+  const [errors, setErrors] = useState<any[]>([]);
   const { mutateAsync: newUser, isPending: loadingResponse } = useSignIn();
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -41,22 +41,47 @@ export default function Page() {
     e.preventDefault();
 
     try {
-      const result = await newUser(formData);
-      dispatch(
-        logIn({
-          username: result?.data.data.username,
-          email: result?.data.data.email,
-        })
-      );
-
-      if(result?.status === 201){
-        router.push('/login')
+      const response = createUserSchema.safeParse({
+        name: formData.username,
+        email: formData.email,
+        password: formData.password,
+      });
+      console.log(response);
+      if (!response.success) {
+        console.log("zod")
+        let errArr: any[] = [];
+        const { errors: err } = response.error;
+        for (var i = 0; i < err.length; i++) {
+          errArr.push({ for: err[i].path[0], message: err[i].message });
+        }
+        console.log(errArr[0].message);
+        setErrors(errArr);
+      }else{
+        try {
+          const result = await newUser(formData);
+          dispatch(
+            logIn({
+              username: result?.data.data.username,
+              email: result?.data.data.email,
+            })
+          );
+    
+          if(result?.status === 201){
+            router.push('/login')
+          }
+    
+        } catch (error) {
+          console.error("Error submitting form:", error);
+        }
       }
 
     } catch (error) {
-      console.error("Error submitting form:", error);
+      console.error(error);
     }
   };
+
+
+
 
 
   return (
@@ -99,6 +124,9 @@ export default function Page() {
                   onChange={handleChange}
                 />
               </div>
+              <div className="mt-1 text-xs text-red-500">
+                {errors.find((error) => error.for === "name")?.message}
+              </div>
               <div className="flex flex-col space-y-1.5 w-full">
                 <Input
                   id="email"
@@ -108,6 +136,9 @@ export default function Page() {
                   onChange={handleChange}
                 />
               </div>
+              <div className="mt-1 text-xs text-red-500">
+                {errors.find((error) => error.for === "email")?.message}
+              </div>
               <div className="flex flex-col space-y-1.5 w-full">
                 <Input
                   id="password"
@@ -116,6 +147,9 @@ export default function Page() {
                   value={formData.password}
                   onChange={handleChange}
                 />
+              </div>
+              <div className="mt-1 text-xs text-red-500">
+                {errors.find((error) => error.for === "password")?.message}
               </div>
               <CardFooter className="flex mt-4 justify-center w-full">
                 <Button type="submit">Sign Up</Button>
