@@ -15,20 +15,20 @@ import { Input } from "@/components/ui/input";
 import { useRouter } from "next/navigation";
 import { USER } from "@/types";
 import { useSignIn } from "@/lib/react-query/queriesAndMutations";
-import { useDispatch } from "react-redux";
-import { logIn } from "@/Redux/Auth/auth-slice";
-import { z } from 'zod';
 import { createUserSchema } from "../formValidation";
+import { useSelector } from "react-redux";
+import { RootState } from "@/Redux/store";
 export default function Page() {
   const [formData, setFormData] = useState<USER>({
     username: "",
     email: "",
     password: "",
   });
-  const dispatch = useDispatch();
+
   const router = useRouter();
   const [errors, setErrors] = useState<any[]>([]);
   const { mutateAsync: newUser, isPending: loadingResponse } = useSignIn();
+  const isLoggedIn = useSelector((state:RootState)=>state.auth.isAuth);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setFormData({
@@ -46,7 +46,7 @@ export default function Page() {
         email: formData.email,
         password: formData.password,
       });
-      console.log(response);
+
       if (!response.success) {
         console.log("zod")
         let errArr: any[] = [];
@@ -59,13 +59,7 @@ export default function Page() {
       }else{
         try {
           const result = await newUser(formData);
-          dispatch(
-            logIn({
-              username: result?.data.data.username,
-              email: result?.data.data.email,
-            })
-          );
-    
+          
           if(result?.status === 201){
             router.push('/login')
           }
@@ -80,7 +74,7 @@ export default function Page() {
     }
   };
 
-
+  if(isLoggedIn) return router.push('/dashboard')
 
 
 

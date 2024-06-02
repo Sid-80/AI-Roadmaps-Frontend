@@ -1,10 +1,23 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
 import "./globals.css";
 import ReduxProvider from "./Provider";
 import QueryProvider from "@/lib/react-query/Provider";
 
-const inter = Inter({ subsets: ["latin"] });
+import { Open_Sans, Roboto_Mono } from 'next/font/google'
+
+const openSans = Open_Sans({
+  subsets: ['latin'],
+  display: 'swap',
+  //👇 Add variable to our object
+  variable: '--font-opensans',
+})
+
+//👇 Configure the object for our second font
+const robotoMono = Roboto_Mono({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-roboto-mono',
+})
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -18,7 +31,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body  className={`${openSans.variable} ${robotoMono.variable} font-sans`}>
         <QueryProvider>
           <ReduxProvider>{children}</ReduxProvider>
         </QueryProvider>

@@ -1,21 +1,21 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-type InitialState = {
-  value: AuthState;
-};
-
 type AuthState = {
   isAuth: boolean;
+  id:string;
   username: string;
   email: string;
+  refreshToken:string;
+  accessToken:string;
 };
 
-const initialState: InitialState = {
-  value: {
+const initialState: AuthState = {
+  id:"",
     isAuth: false,
     username: "",
     email: "",
-  },
+    accessToken: "",
+    refreshToken: ""
 };
 
 export const auth = createSlice({
@@ -26,13 +26,12 @@ export const auth = createSlice({
       return initialState;
     },
     logIn: (state, action: PayloadAction<any>) => {
-      return {
-        value: {
-          isAuth: true,
-          username: action.payload.username,
-          email: action.payload.email,
-        },
-      };
+      state.id = action.payload.id
+      state.email = action.payload.email;
+      state.isAuth = true;
+      state.accessToken = action.payload.accessToken;
+      state.refreshToken = action.payload.refreshToken;
+      state.username = action.payload.username;
     },
   },
 });
