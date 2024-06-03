@@ -3,8 +3,8 @@ import { Input } from "@/components/ui/input"
 
 export default function SearchBar() {
   return (
-    <div className="flex items-center space-x-2">
-      <Input type="text" className="px-3 py-2 w-80" placeholder="Search..." />
+    <div className="flex items-end justify-end space-x-2 w-full">
+      <Input type="text" className="px-3 py-2 w-full sm:w-80" placeholder="Search..." />
       <Button className="px-3 py-2">
         <svg
           xmlns="http://www.w3.org/2000/svg"

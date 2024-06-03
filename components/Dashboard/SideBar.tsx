@@ -13,7 +13,7 @@ export default function SideBar() {
   const [open, setOpen] = useState<boolean>(true);
 
   return (
-    <div className="p-8 flex flex-col items-center justify-between bg-[#D2DAFF] text-[#1B262C]">
+    <div className="hidden  p-8 sm:flex flex-col items-center justify-between bg-[#D2DAFF] text-[#1B262C]">
       <div className="flex flex-col items-center justify-center">
         <div className="flex gap-3">
           <Image
@@ -33,7 +33,7 @@ export default function SideBar() {
         </div>
 
         <div className="flex flex-col py-10">
-          <Button onClick={()=>router.push('/dashboard/create')} className="flex gap-3">
+          <Button onClick={()=>router.push('/create')} className="flex gap-3">
             <Image
               className="w-5 h-5"
               width={5}
