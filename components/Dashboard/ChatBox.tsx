@@ -30,16 +30,16 @@ const ChatBox = () => {
                                         height={30}
                                     />
                     </CardHeader>
-                    <CardContent className='bg-[#EEF1FF] border-2 rounded-lg h-[15rem] ml-7 mr-7 mt-2 ' >
+                    <CardContent className='bg-[#EEF1FF] border-2 rounded-lg h-[15rem] ml-[1.06rem] mr-[1.06rem] mt-2 overflow-y-auto ' >
                         {showResult ? (
-                            <div className="py-0 px-[5%] max-h-[70vh] overflow-y-scroll result ">
+                            <div className="py-0 max-h-[70vh] result  ">
                                 <div className="my-[40px] mx-0 flex items-center gap-5"> 
                                     <Image
-                                        className="w-10 rounded-[50%]"
+                                        className=""
                                         src={"/user.svg"}
                                         alt=""
-                                        width={30}
-                                        height={30}
+                                        width={20}
+                                        height={20}
                                     />
                                     <p className="dark:text-white">{recentPrompt}</p>
                                 </div>
@@ -48,8 +48,8 @@ const ChatBox = () => {
                                         className={`${loading ? ' animate-pulse' : ''}`}
                                         src={"/bot.svg"}
                                         alt=""
-                                        width={40}
-                                        height={40}
+                                        width={20}
+                                        height={20}
                                     />
                                     {loading ? (
                                         <div className="w-[100%] flex flex-col gap-2.5">

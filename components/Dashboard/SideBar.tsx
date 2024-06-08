@@ -6,7 +6,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-
+import NewFile from "./NewFile";
 export default function SideBar() {
   const dispatch = useDispatch();
   const router = useRouter();
@@ -33,7 +33,7 @@ export default function SideBar() {
         </div>
 
         <div className="flex flex-col py-10">
-          <Button onClick={()=>router.push('/create')} className="flex gap-3">
+          <Button  className="flex gap-3">
             <Image
               className="w-5 h-5"
               width={5}
@@ -41,7 +41,7 @@ export default function SideBar() {
               src={"/document.svg"}
               alt=""
             />
-            <p className={`${open ? "" : "hidden"}`}>New File</p>
+            <p className={`${open ? "" : "hidden"}`}><NewFile/></p>
           </Button>
         </div>
       </div>
